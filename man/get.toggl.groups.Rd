@@ -23,6 +23,7 @@ Fetch a list of groups from toggl.
 get.toggl.groups(Sys.getenv("TOGGL_TOKEN"), Sys.getenv("TOGGL_WORKSPACE"))
 }
 \seealso{
-Other get.toggl: \code{\link{get.toggl.clients}}
+Other get.toggl: \code{\link{get.toggl.clients}},
+  \code{\link{get.toggl.v8}}
 }
 \concept{get.toggl}
