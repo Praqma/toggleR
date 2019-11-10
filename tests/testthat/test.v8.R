@@ -16,6 +16,10 @@ test_that('There is a TOGGL_WORKSPACE', {
   expect_false(is.element('', workspace))
 })
 
+test_that('Fetching clients work', {
+  expect_equal(get.toggl.clients(token, workspace)$status_code, 200)
+})
+
 test_that('Fetching groups work', {
   expect_equal(get.toggl.groups(token, workspace)$status_code, 200)
 })
