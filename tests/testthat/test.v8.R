@@ -3,6 +3,19 @@ context('API')
 library(httr)
 library(toggleR)
 
+token <- Sys.getenv("TOGGL_TOKEN")
+workspace <- Sys.getenv("TOGGL_WORKSPACE")
+
+test_that('There is a TOGGL_TOKEN', {
+  expect_equal(length(token), 1)
+  expect_false(is.element('', token))
+})
+
+test_that('There is a TOGGL_WORKSPACE', {
+  expect_equal(length(workspace), 1)
+  expect_false(is.element('', workspace))
+})
+
 test_that('Fetching groups work', {
-  expect_equal(get.toggl.groups(Sys.getenv("TOGGL_TOKEN"), Sys.getenv("TOGGL_WORKSPACE"))$status_code, 200)
+  expect_equal(get.toggl.groups(token, workspace)$status_code, 200)
 })
