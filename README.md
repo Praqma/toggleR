@@ -23,10 +23,8 @@ library(httr)
 
 library(toggleR)
 
-# get the list of groups from toggl in json format
-groups.json <- get.toggl.groups(Sys.getenv("TOGGL_TOKEN"), Sys.getenv("TOGGL_WORKSPACE"))
-# extract the data as a tibble
-groups <- as_tibble(fromJSON(content(groups.json, "text")))
+# get the list of groups from toggl
+groups <- as_tibble(get.toggl.groups(Sys.getenv("TOGGL_TOKEN"), Sys.getenv("TOGGL_WORKSPACE")))
 ```
 
 For more details

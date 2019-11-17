@@ -1,6 +1,7 @@
 context('API')
 
 library(httr)
+library(jsonlite)
 library(toggleR)
 
 token <- Sys.getenv("TOGGL_TOKEN")
@@ -17,9 +18,9 @@ test_that('There is a TOGGL_WORKSPACE', {
 })
 
 test_that('Fetching clients work', {
-  expect_equal(get.toggl.clients(token, workspace)$status_code, 200)
+  expect_equal(get.toggl.v8(token, workspace, 'clients')$status_code, 200)
 })
 
 test_that('Fetching groups work', {
-  expect_equal(get.toggl.groups(token, workspace)$status_code, 200)
+  expect_equal(get.toggl.v8(token, workspace, 'groups')$status_code, 200)
 })

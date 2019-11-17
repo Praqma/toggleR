@@ -3,3 +3,4 @@
 export(get.toggl.clients)
 export(get.toggl.groups)
 export(get.toggl.v8)
+export(get.toggl.v8.data)
