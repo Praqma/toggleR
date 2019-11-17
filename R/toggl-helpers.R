@@ -40,7 +40,7 @@ get.toggl.v8.data <- function(toggl_token, workspace_id, what, verbose = FALSE) 
   json.response <- get.toggl.v8(toggl_token, workspace_id, what, verbose)
 
   if (json.response$status_code == 200) {
-    return(fromJSON(content(groups.json, "text")))
+    return(fromJSON(content(json.response, "text")))
   }
 
   print(json.response)

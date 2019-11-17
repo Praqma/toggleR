@@ -19,8 +19,10 @@ test_that('There is a TOGGL_WORKSPACE', {
 
 test_that('Fetching clients work', {
   expect_equal(get.toggl.v8(token, workspace, 'clients')$status_code, 200)
+  expect_true(is.data.frame(get.toggl.clients(token, workspace)))
 })
 
 test_that('Fetching groups work', {
   expect_equal(get.toggl.v8(token, workspace, 'groups')$status_code, 200)
+  expect_true(is.data.frame(get.toggl.groups(token, workspace)))
 })
