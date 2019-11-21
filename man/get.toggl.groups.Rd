@@ -14,7 +14,7 @@ get.toggl.groups(toggl_token, workspace_id, verbose = FALSE)
 \item{verbose}{A flag to enable more verbose output, Default value: FALSE}
 }
 \value{
-The list (JSON) of groups accessable using \code{toggl_token} from the toggl workspace with id: \code{workspace_id}.
+A data frame of the groups accessable using \code{toggl_token} from the toggl workspace with id: \code{workspace_id}.
 }
 \description{
 Fetch a list of groups from toggl.
@@ -24,6 +24,8 @@ get.toggl.groups(Sys.getenv("TOGGL_TOKEN"), Sys.getenv("TOGGL_WORKSPACE"))
 }
 \seealso{
 Other get.toggl: \code{\link{get.toggl.clients}},
+  \code{\link{get.toggl.group.data}},
+  \code{\link{get.toggl.v2.group.details}},
   \code{\link{get.toggl.v8.data}},
   \code{\link{get.toggl.v8}}
 }

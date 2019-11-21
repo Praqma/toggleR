@@ -6,7 +6,10 @@ WiP
 
 ## Dependencies
 
-The package `toggleR` depends on `httr` to use the REST api on https://toggl.com
+The package `toggleR` depends on: 
+
+- `httr` to use the REST api on https://toggl.com
+- `jsonlite` to parse JSON data
 
 ## Methods
 
@@ -26,6 +29,14 @@ library(toggleR)
 # get the list of groups from toggl
 groups <- as_tibble(get.toggl.groups(Sys.getenv("TOGGL_TOKEN"), Sys.getenv("TOGGL_WORKSPACE")))
 ```
+
+To get the detailed report for a group 
+
+```R
+# get the entries for a group for the last 30 days
+get.toggl.group.data(Sys.getenv("TOGGL_TOKEN"), Sys.getenv("TOGGL_WORKSPACE"), <groupId>, since = Sys.Date() - 30)
+```
+
 
 For more details
 

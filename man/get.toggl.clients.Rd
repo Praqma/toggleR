@@ -14,7 +14,7 @@ get.toggl.clients(toggl_token, workspace_id, verbose = FALSE)
 \item{verbose}{A flag to enable more verbose output, Default value: FALSE}
 }
 \value{
-The list (JSON) of clients accessable using \code{toggl_token} from the toggl workspace with id: \code{workspace_id}.
+A data frame of the clients accessable using \code{toggl_token} from the toggl workspace with id: \code{workspace_id}.
 }
 \description{
 Fetch a list of clients from toggl.
@@ -23,7 +23,9 @@ Fetch a list of clients from toggl.
 get.toggl.clients(Sys.getenv("TOGGL_TOKEN"), Sys.getenv("TOGGL_WORKSPACE"))
 }
 \seealso{
-Other get.toggl: \code{\link{get.toggl.groups}},
+Other get.toggl: \code{\link{get.toggl.group.data}},
+  \code{\link{get.toggl.groups}},
+  \code{\link{get.toggl.v2.group.details}},
   \code{\link{get.toggl.v8.data}},
   \code{\link{get.toggl.v8}}
 }
