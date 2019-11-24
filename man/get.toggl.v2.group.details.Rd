@@ -29,9 +29,6 @@ A httr response object with the paged data for the wanted \code{group}.
 \description{
 Fetch a page of entries for a group using the V2 API
 }
-\examples{
-get.toggl.v2.group.details(Sys.getenv("TOGGL_TOKEN"), Sys.getenv("TOGGL_WORKSPACE"), <groupId>, since = Sys.Date() - 30)
-}
 \seealso{
 Other get.toggl: \code{\link{get.toggl.clients}},
   \code{\link{get.toggl.group.data}},

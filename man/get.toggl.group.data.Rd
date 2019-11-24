@@ -5,7 +5,7 @@
 \title{Fetch the detailed entries for a group during a specified time interval}
 \usage{
 get.toggl.group.data(toggl_token, workspace_id, group, since = Sys.Date()
-  - 7, verbose = FALSE)
+  - 7, until = Sys.Date(), verbose = FALSE)
 }
 \arguments{
 \item{toggl_token}{A toggl API token to access https://toggl.com.}
@@ -16,18 +16,15 @@ get.toggl.group.data(toggl_token, workspace_id, group, since = Sys.Date()
 
 \item{since}{The start date of the wanted time interval, Default value: \code{Sys.Date() -7}}
 
-\item{verbose}{A flag to enable more verbose output, Default value: FALSE}
-
 \item{until}{The end date of the wanted interval, Default value: \code{Sys.Date()}}
+
+\item{verbose}{A flag to enable more verbose output, Default value: FALSE}
 }
 \value{
 A data frame with the collected entries for the wanted \code{group}.
 }
 \description{
 Fetch the detailed entries for a group during a specified time interval
-}
-\examples{
-get.toggl.group.data(Sys.getenv("TOGGL_TOKEN"), Sys.getenv("TOGGL_WORKSPACE"), <groupId>, since = Sys.Date() - 30)
 }
 \seealso{
 Other get.toggl: \code{\link{get.toggl.clients}},

@@ -85,8 +85,6 @@ get.toggl.groups <- function(toggl_token, workspace_id, verbose = FALSE) {
 #' @param verbose A flag to enable more verbose output, Default value: FALSE
 #' @return A httr response object with the paged data for the wanted \code{group}.
 #' @family get.toggl
-#' @examples
-#' get.toggl.v2.group.details(Sys.getenv("TOGGL_TOKEN"), Sys.getenv("TOGGL_WORKSPACE"), <groupId>, since = Sys.Date() - 30)
 #' @export
 get.toggl.v2.group.details <- function(toggl_token, workspace_id, group, since = Sys.Date() - 7, until = Sys.Date(), page = 1, verbose = FALSE) {
   username <- toggl_token
@@ -127,16 +125,14 @@ get.toggl.v2.group.details <- function(toggl_token, workspace_id, group, since =
 #' @param verbose A flag to enable more verbose output, Default value: FALSE
 #' @return A data frame with the collected entries for the wanted \code{group}.
 #' @family get.toggl
-#' @examples
-#' get.toggl.group.data(Sys.getenv("TOGGL_TOKEN"), Sys.getenv("TOGGL_WORKSPACE"), <groupId>, since = Sys.Date() - 30)
 #' @export
-get.toggl.group.data <- function(toggl_token, workspace_id, group, since = Sys.Date() - 7, verbose = FALSE) {
+get.toggl.group.data <- function(toggl_token, workspace_id, group, since = Sys.Date() - 7, until = Sys.Date(),  verbose = FALSE) {
   page <- 1
 
   not.done <- TRUE
 
   while (not.done) {
-    json.response <- get.toggl.v2.group.details(toggl_token, workspace_id, group, since = since, page = page)
+    json.response <- get.toggl.v2.group.details(toggl_token, workspace_id, group, since = since, until = until, page = page)
     if (json.response$status_code == 200) {
       response <- fromJSON(content(json.response, "text", encoding = 'UTF-8'))
       if (verbose) {
