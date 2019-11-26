@@ -6,6 +6,10 @@ pipeline {
         steps {
             dir('toggleR') {
                 checkout scm
+                sh './version.sh'
+            }
+            script {
+                currentBuild.description = readFile('toggleR/version.txt')
             }
         }
     }
@@ -20,7 +24,7 @@ pipeline {
                 dir ('toggleR') {
                     sh 'docker build -t tidyverse-test .'
                 }
-                sh 'docker run -v $PWD:/toggleR -w /toggleR --env TOGGL_TOKEN --env TOGGL_WORKSPACE tidyverse-test R CMD check toggleR_0.0.0.9000.tar.gz'
+                sh 'docker run -v $PWD:/toggleR -w /toggleR --env TOGGL_TOKEN --env TOGGL_WORKSPACE tidyverse-test R CMD check toggleR_$(cat toggleR/version.r).tar.gz'
             }
         }
     }
