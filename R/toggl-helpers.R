@@ -129,18 +129,18 @@ get.toggl.v2.group.details <- function(toggl_token, workspace_id, group, since =
 get.toggl.group.data <- function(toggl_token, workspace_id, group, since = Sys.Date() - 7, until = Sys.Date(),  verbose = FALSE) {
   page <- 1
 
+  if (verbose) {
+    print(paste("Token:", toggl_token))
+    print(paste("W Id:", workspace_id))
+    print(paste("Group:", group))
+    print(paste("Since:", since))
+    print(paste("Until:", until))
+  }
   not.done <- TRUE
-
   while (not.done) {
     json.response <- get.toggl.v2.group.details(toggl_token, workspace_id, group, since = since, until = until, page = page)
     if (json.response$status_code == 200) {
       response <- fromJSON(content(json.response, "text", encoding = 'UTF-8'))
-      if (verbose) {
-        print(summary(response))
-        print(rownames(response$data))
-        print(response$total_count)
-        print(length(response$data))
-      }
       if (length(response$data) > 0) {
         if (page == 1) {
           data.response <- data.frame(response$data)
