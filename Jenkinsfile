@@ -28,6 +28,24 @@ pipeline {
             }
         }
     }
+    stage('Release') {
+        when {
+            branch 'master'
+            expression { readFile('toggleR/version.r') ==~ /\d.\d.\d/ }
+        }
+        steps {
+            withCredentials([string(credentialsId: 'praqmarelease', variable: 'PraqmaRelease')]) {
+                sh '''
+                version=$(cat toggleR/version.r
+                url="https://uploads.github.com/repos/Praqma/toggleR/releases/$version/assets?name=$version&tag_name=$version"
+                curl -X POST \
+                 --data-binary @toggleR_$version.tar.gz \
+                 -H "Authorization: token $PraqmaRelease" \
+                 -H "Content-Type: application/octet-stream" $url
+                '''
+            }
+        }
+    }
   }
   post {
         always {
