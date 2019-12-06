@@ -31,17 +31,14 @@ pipeline {
     stage('Release') {
         when {
             branch 'master'
-            expression { readFile('toggleR/version.r') ==~ /\d.\d.\d/ }
+            expression { readFile('toggleR/version.r').trim() ==~ /\d+.\d+.\d+/ }
         }
         steps {
-            withCredentials([string(credentialsId: 'praqmarelease', variable: 'PraqmaRelease')]) {
+            withCredentials([string(credentialsId: 'praqmarelease', variable: 'TOGGLER_TOKEN')]) {
                 sh '''
-                version=$(cat toggleR/version.r
-                url="https://uploads.github.com/repos/Praqma/toggleR/releases/$version/assets?name=$version&tag_name=$version"
-                curl -X POST \
-                 --data-binary @toggleR_$version.tar.gz \
-                 -H "Authorization: token $PraqmaRelease" \
-                 -H "Content-Type: application/octet-stream" $url
+                version=$(head -1 toggleR/version.r)
+                message=$(cat toggleR/message.txt)
+                toggleR/release.sh $version $message
                 '''
             }
         }
