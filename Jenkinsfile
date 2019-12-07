@@ -54,7 +54,7 @@ pipeline {
                     version=$(head -1 ../version.r)
                     docker build  -t praqma/toggler:$version .
                     docker images
-                    docker login -u $user -p $passwd
+                    docker login -u releasepraqma -p $passwd
                     docker push praqma/toggler:$version
                     '''
                 }
