@@ -21,7 +21,7 @@ pipeline {
     stage('Check') {
         steps {
             catchError {
-                dir ('toggleR') {
+                dir ('toggleR/docker-test') {
                     sh 'docker build -t tidyverse-test .'
                 }
                 sh 'docker run -v $PWD:/toggleR -w /toggleR --env TOGGL_TOKEN --env TOGGL_WORKSPACE tidyverse-test R CMD check toggleR_$(cat toggleR/version.r).tar.gz'
@@ -40,6 +40,24 @@ pipeline {
                 message=$(cat toggleR/message.txt)
                 toggleR/release.sh $version $message
                 '''
+            }
+        }
+    }
+    stage('Docker Image') {
+        when {
+            branch 'master'
+        }
+        steps {
+            withCredentials([usernamePassword(credentialsId: 'dockerhub', passwordVariable: 'passwd', usernameVariable: 'user')]) {
+                dir('toggleR/docker-build') {
+                    sh '''
+                    version=$(head -1 ../version.r)
+                    docker build  -t praqma/toggler:$version .
+                    docker images
+                    docker login -u $user -p $passwd
+                    docker push praqma/toggler:$version
+                    '''
+                }
             }
         }
     }
