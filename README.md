@@ -2,7 +2,7 @@
 
 ## Building
 
-WiP
+[![CircleCI](https://circleci.com/gh/Praqma/toggleR/tree/master.svg?style=svg)](https://circleci.com/gh/Praqma/toggleR/tree/master)
 
 ## Dependencies
 
