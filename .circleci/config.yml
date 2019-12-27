@@ -1,0 +1,61 @@
+version: 2
+jobs:
+  build:
+    machine: true
+
+    steps:
+      - checkout:
+          path: ~/project/toggleR
+
+      - run:
+          name: Version
+          command: | 
+            cd toggleR
+            ./version.sh
+
+      - run:
+          name: git log
+          command: | 
+            cd toggleR 
+            git log --oneline --decorate --graph
+
+      - run:
+          name: Build toggleR
+          command: docker run -v $PWD:/toggleR -w /toggleR rocker/tidyverse R CMD build toggleR
+      
+      - run:
+          name: Build tidyverse-test
+          command: |
+            cd toggleR/docker-test
+            docker build -t tidyverse-test .
+
+      - run:
+          name: Check toggleR
+          command: docker run -v $PWD:/toggleR -w /toggleR --env TOGGL_TOKEN --env TOGGL_WORKSPACE tidyverse-test R CMD check toggleR_$(cat toggleR/version.r).tar.gz
+
+      - run:
+          name: Release toggleR
+          command: |
+            version=$(head -1 toggleR/version.r)
+            if [[ $version =~ ^[0-9]+\.[0-9]+\.[0-9]$ ]]; then
+              message=$(cat toggleR/message.txt)
+              echo Release $version
+              toggleR/release.sh $version $message
+            else
+              echo we do not have a release 
+            fi
+
+      - run:
+          name: Build Docker Image
+          command: |
+            if [ "$CIRCLE_BRANCH" -eq "master" ]; then
+              cd toggleR/docker-build
+              version=$(head -1 ../version.r)
+              docker build  -t praqma/toggler:$version .
+              docker images
+              docker login -u $DOCKER_USER -p $DOCKER_TOKEN
+              docker push praqma/toggler:$version
+            fi
+
+      - store_artifacts:
+          path: toggleR.Rcheck
