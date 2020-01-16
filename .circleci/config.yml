@@ -48,7 +48,7 @@ jobs:
       - run:
           name: Build Docker Image
           command: |
-            if [ "$CIRCLE_BRANCH" -eq "master" ]; then
+            if [ "$CIRCLE_BRANCH" == "master" ]; then
               cd toggleR/docker-build
               version=$(head -1 ../version.r)
               docker build  -t praqma/toggler:$version .
